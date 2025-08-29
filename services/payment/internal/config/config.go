@@ -4,12 +4,14 @@ import "time"
 
 const AppName = "Payment"
 
+// PaymentConfiguration holds the configuration for the payment service.
 type PaymentConfiguration struct {
 	LogLevel string `env:"LOG_LEVEL,default=INFO"`
 	Port     string `env:"PORT,default=8000"`
 	DB       DBConfig
 }
 
+// DBConfig holds database connection and pool settings.
 type DBConfig struct {
 	DNS             string        `env:"DB_DNS,required"`
 	MaxConns        int32         `env:"DB_MAX_CONNS,default=10"`

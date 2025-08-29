@@ -8,21 +8,13 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-type DB interface {
-	Select(ctx context.Context, dest any, query string, args ...any) error
-	Exec(ctx context.Context, query string, args ...any) (int64, error)
-	QueryRow(ctx context.Context, dest any, query string, args ...any) error
-	BeginTx(ctx context.Context) (Tx, error)
-	Ping(ctx context.Context) error
-	Close()
-}
-
 type db struct {
 	pool *pgxpool.Pool
 }
 
 type TxOptions struct{}
 
+// New initializes a new database connection pool using the provided configuration.
 func New(ctx context.Context, cfg Config) (DB, error) {
 	if cfg.DSN == "" {
 		return nil, fmt.Errorf("DSN cannot be empty")

@@ -17,14 +17,19 @@ const (
 	MockErrorBadRequest
 )
 
+// MockOrderService is a mock implementation of the Order Service interface.
 type MockOrderService struct {
 	ResponseType MockResponseType
 }
 
+// NewMockOrderService creates a new mock order service with the specified
+// response type.
 func NewMockOrderService(responseType MockResponseType) *MockOrderService {
 	return &MockOrderService{ResponseType: responseType}
 }
 
+// GetOrderByExternalIDForUser returns a mock order or an error depending
+// on the configured ResponseType
 func (m *MockOrderService) GetOrderByExternalIDForUser(ctx context.Context,
 	externalOrderID uuid.UUID, userID uint32) (*Order, error) {
 	switch m.ResponseType {

@@ -11,7 +11,6 @@ import (
 	"time"
 
 	"github.com/gofiber/fiber/v2"
-	fiberLogger "github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	paymentCfg "github.com/walker-16/payment-system/services/payment/internal/config"
 	"github.com/walker-16/payment-system/services/payment/internal/handler"
@@ -56,6 +55,10 @@ func main() {
 	}
 	defer db.Close()
 
+	// TODO:
+	// initalize consumer for process pendint outbox and send event to kafka.
+	// modify gracefull shutdown.
+
 	// create and run server.
 	app := newServer(db, logger)
 	serverErr := make(chan error, 1)
@@ -88,9 +91,8 @@ func newServer(db db.DB, logger logger.Logger) *fiber.App {
 	// create a new Fiber app.
 	app := fiber.New()
 
-	// TODO: configurate middelware.
+	// TODO: config middelware for requestedId and log.
 	app.Use(recover.New())
-	app.Use(fiberLogger.New())
 
 	// Register routes.
 	registerRoutes(app, db, logger)

@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 )
 
+// Payment represents a payment record in the system.
 type Payment struct {
 	ID              int64     `db:"id"`
 	PaymentID       uuid.UUID `db:"payment_id"`
@@ -18,3 +19,5 @@ type Payment struct {
 	CreatedAt       time.Time `db:"created_at"`
 	UpdatedAt       time.Time `db:"updated_at"`
 }
+
+//TODO: modify to use http://godoc.org/github.com/shopspring/decimal in amount.

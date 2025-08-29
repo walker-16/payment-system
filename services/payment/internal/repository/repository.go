@@ -86,3 +86,5 @@ func (r *PaymentRepository) InsertPayment(ctx context.Context, p *domain.Payment
 	}
 	return nil
 }
+
+// TODO: pending add test to repository InsertPayment.

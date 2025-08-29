@@ -1,18 +1,25 @@
 package kafka
 
 import (
-	"log"
+	"payment-system/pkg/logger"
 
 	"github.com/IBM/sarama"
 )
 
-// Producer wraps a Sarama SyncProducer
-type Producer struct {
-	syncProducer sarama.SyncProducer
+type SyncProducerInterface interface {
+	SendMessage(msg *sarama.ProducerMessage) (partition int32, offset int64, err error)
+	Close() error
 }
 
-// NewProducer creates a Kafka producer
-func NewProducer(brokers []string, clientID string) (*Producer, error) {
+// Producer wraps a Sarama SyncProducer.
+type Producer struct {
+	syncProducer SyncProducerInterface
+	logger       logger.Logger
+}
+
+// NewProducer creates a Kafka producer.
+func NewProducer(brokers []string, clientID string,
+	logger logger.Logger) (*Producer, error) {
 	config := NewSaramaConfig(clientID)
 	producer, err := sarama.NewSyncProducer(brokers, config)
 	if err != nil {
@@ -21,7 +28,7 @@ func NewProducer(brokers []string, clientID string) (*Producer, error) {
 	return &Producer{syncProducer: producer}, nil
 }
 
-// SendMessage sends a message to Kafka topic with retries
+// SendMessage sends a message to Kafka topic with retries.
 func (p *Producer) SendMessage(topic string, key, value []byte) error {
 	msg := &sarama.ProducerMessage{
 		Topic: topic,
@@ -31,12 +38,13 @@ func (p *Producer) SendMessage(topic string, key, value []byte) error {
 
 	_, _, err := p.syncProducer.SendMessage(msg)
 	if err != nil {
-		log.Printf("failed to send message: %v", err)
+		p.logger.Error("failed to send message to topic %s: %v", topic, err)
 	}
+
 	return err
 }
 
-// Close closes the producer connection
+// Close closes the producer connection.
 func (p *Producer) Close() error {
 	return p.syncProducer.Close()
 }

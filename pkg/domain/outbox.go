@@ -3,9 +3,10 @@ package domain
 import (
 	"time"
 
-	"github.com/google/uuid" // TODO:
+	"github.com/google/uuid"
 )
 
+// Outbox represents a record in the outbox table used for event-driven processing.
 type Outbox struct {
 	ID            int64     `db:"id"`
 	AggregateID   uuid.UUID `db:"aggregate_id"`

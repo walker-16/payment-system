@@ -107,6 +107,8 @@ func (h *PaymentHandler) CreatePayment(c *fiber.Ctx) error {
 		Status:          "PENDING",
 	}
 
+	// TODO: check idempotency-id.
+
 	// insert payment.
 	err = h.repository.InsertPayment(ctx, payment)
 	if err != nil {
