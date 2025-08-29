@@ -46,6 +46,7 @@ The **Payment** service requires the following environment variables:
 
 Or using VS Code with the provided launch.json configuration:
 
+```json
 {
   "name": "Launch Package",
   "type": "go",
