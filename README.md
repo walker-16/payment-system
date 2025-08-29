@@ -36,7 +36,7 @@ The **Payment** service requires the following environment variables:
 |-------------------------|----------------------------------------------|----------------------------------------------------------------------|
 | `LOG_LEVEL`             | Logging level                                | `INFO`                                                               |
 | `PORT`                  | Port where the service will run              | `8200`                                                               |
-| `DB_DNS`                | PostgreSQL connection string                 | `postgres://postgres:postgres@localhost:15432/wormhole`              |
+| `DB_DNS`                | PostgreSQL connection string                 | `postgres://postgres:postgres@localhost:15432/local`                 |
 | `DB_MAX_CONNS`          | Maximum number of DB connections             | `10`                                                                 |
 | `DB_MIN_CONNS`          | Minimum number of DB connections             | `0`                                                                  |
 | `DB_MAX_CONN_IDLE_TIME` | Maximum idle time for DB connections         | `30m`                                                                |
